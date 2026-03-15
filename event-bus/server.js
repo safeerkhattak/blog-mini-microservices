@@ -4,9 +4,11 @@ import axios from "axios";
 const app = express()
 app.use(express.json())
 
+const events = []
 
 app.post('/events',async (req,res)=>{
     const event = req.body;
+    events.push(event)
     //echoing event to all services
      try {
     await axios.post('http://localhost:4000/events', event);
@@ -16,9 +18,14 @@ app.post('/events',async (req,res)=>{
 
     res.send({ status: 'OK' });
   } catch (error) {
-    console.log("error in event bus", error.message);
+    console.log("error in event bus", error);
     res.status(500).send({ error: "Failed to deliver event" });
   }
+})
+
+app.get('/events',(req,res)=>{
+    res.send(events)
+
 })
 
 
