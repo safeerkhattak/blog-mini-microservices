@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: posts-depl
+spec:       # defines how should the deployment behaves
+  replicas: 1  # number of pods that we want to create to run certain numbers of image
+  selector:  # selector tell the depl that=> take a look at the different pods that have been created, find all the pods with lebel app: posts, and those are the pods that it should be in charge of
+    matchLabels: 
+      app: posts # app here doesn't have any special meaning, we can set up  labels with any structure that you can imagine
+  template: # in template is where we specify the exact configuration of a pod, that we want this deployment to create
+    metadata: # in template is where we specify the exact configuration of a pod, that we want this deployment is going to make
+      labels:
+        app: posts
+    spec: 
+      containers: 
+        - name: posts
+          image: safeer/posts:0.0.1
+# Commented version
+# apiVersion: apps/v1        # API group/version for Deployment resource
+# kind: Deployment           # We are creating a Deployment (manages Pods)
+# metadata:
+# name: posts-depl         # Name of this Deployment
+# spec:                      # Desired state of the Deployment
+# replicas: 1              # Number of Pods we want running at all times
+# selector:                # How Deployment finds and manages its Pods
+# matchLabels:
+# app: posts           # Must match the labels defined in template.metadata.labels
+# template:                # Blueprint for creating Pods
+# metadata:
+# labels:
+# app: posts         # Labels assigned to Pods (used by selector & Service)
+# spec:                  # Pod specification
+# containers:
+# - name: posts      # Name of the container inside the Pod
+# image: safeer/posts:0.0.1  # Docker image to run
