@@ -14,7 +14,7 @@ spec:       # defines how should the deployment behaves
     spec: 
       containers: 
         - name: posts
-          image: safeer/posts:0.0.1
+          image: safeer01/posts:latest
 # Commented version
 # apiVersion: apps/v1        # API group/version for Deployment resource
 # kind: Deployment           # We are creating a Deployment (manages Pods)
