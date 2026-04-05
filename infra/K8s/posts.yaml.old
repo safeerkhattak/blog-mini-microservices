@@ -1,8 +1,0 @@
-apiVersion: v1             # 👈 The version of the Kubernetes API used for this resource (v1 = basic resources like Pod, Service)
-kind: Pod                  # 👈 This tells Kubernetes: "I want to create a Pod"
-metadata:                  # 👈 Metadata contains info about the object, like name, labels, annotations
-  name: posts              # 👈 The name of this Pod; must be unique in the namespace
-spec:                      # 👈 Specification of the Pod: describes how the Pod should behave
-  containers:              # 👈 List of containers that will run inside this Pod (a Pod can have 1 or more containers)
-    - name: posts          # 👈 Name of this container inside the Pod
-      image: safeer/posts:0.0.1  # 👈 Docker image to use for this container (image repository + tag)

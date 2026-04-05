@@ -12,7 +12,7 @@ app.post("/events",async( req,res)=>{
         const status = data.content.includes('orange') ? 'rejected' : 'approved';
         try {
             
-            await axios.post('http://localhost:4005/events',{
+            await axios.post('http://event-bus-srv:4005/events',{
                 type:'CommentModerated',
                 data:{
                     id:data.id,
@@ -21,11 +21,14 @@ app.post("/events",async( req,res)=>{
                     content:data.content
                 }
             })
+            res.send("got it from post");
         } catch (error) {
             console.log("error ib moderation")
         }
     }
 
+    // Always respond to avoid hanging the event bus request
+    res.send({})
 })
 
 
