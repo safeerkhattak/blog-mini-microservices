@@ -26,7 +26,9 @@ app.post("/posts", async (req, res) => {
   posts[id] = post;
   try {
     
-    await axios.post('http://localhost:4005/events',{
+    // await axios.post('http://localhost:4005/events',{
+
+    await axios.post('http://event-bus-srv:4005/events',{
       type:'PostCreated',
       data:{
         id,title
@@ -36,6 +38,9 @@ app.post("/posts", async (req, res) => {
     res.status(201).send(posts[id]);
   } catch (error) {
     console.log("error in post",error)
+
+  // ✅ send response even if event bus fails
+  res.status(500).send({ error: "Event bus failed" });
   }
 
 });

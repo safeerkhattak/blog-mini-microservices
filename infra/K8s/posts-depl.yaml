@@ -15,6 +15,20 @@ spec:       # defines how should the deployment behaves
       containers: 
         - name: posts
           image: safeer01/posts:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: posts-clusterip-srv
+spec:
+  selector: 
+    app: posts
+  type: ClusterIP
+  ports: 
+    - name: posts
+      protocol: TCP
+      port: 4000
+      targetPort: 4000
 # Commented version
 # apiVersion: apps/v1        # API group/version for Deployment resource
 # kind: Deployment           # We are creating a Deployment (manages Pods)

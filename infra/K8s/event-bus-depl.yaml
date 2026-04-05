@@ -1,0 +1,41 @@
+# =======================
+# Deployment for Event Bus
+# =======================
+
+apiVersion: apps/v1           # Use the apps/v1 API for Deployment objects
+kind: Deployment              # Define a Deployment object (manages pods, replicas, updates)
+metadata:
+  name: event-bus-depl         # Name of this deployment (used in kubectl commands)
+spec: 
+  replicas: 1                  # Number of pod replicas we want running at all times
+  selector:                    # How Deployment finds the pods it should manage
+    matchLabels:
+      app: event-bus           # Select pods that have this label (must match template labels below)
+  template:                    # Blueprint for the pods that this deployment will create
+    metadata:
+      labels:
+        app: event-bus         # Label assigned to pods created by this deployment
+    spec: 
+      containers:              # Define containers that run inside the pod
+        - name: event-bus      # Name of the container (internal identifier)
+          image: safeer01/event-bus:latest  # Docker image to run in this container (from Docker Hub)
+          # imagePullPolicy: If needed, we can specify 'Always' or 'IfNotPresent' for pulling image
+
+# =======================
+# Service for Event Bus
+# =======================
+
+---
+apiVersion: v1                # Core API version for basic resources like Service, ConfigMap, Secret
+kind: Service                 # Define a Service object (exposes pods to other pods)
+metadata:
+  name: event-bus-srv         # Name of the service (used for internal DNS)
+spec:
+  selector: 
+    app: event-bus            # Service will route traffic to pods with this label
+  type: ClusterIP              # Service type: only accessible inside the cluster
+  ports:                       # Ports exposed by the service
+    - name: event-bus          # Optional name for the port
+      protocol: TCP            # Protocol used for communication
+      port: 4005               # Port service exposes inside the cluster
+      targetPort: 4005         # Port on the pod that actually runs the container
