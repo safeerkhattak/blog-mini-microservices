@@ -44,7 +44,7 @@ const PostCreate = () => {
     event.preventDefault();
 console.log("first,title",title)
     try {
-      await axios.post("http://localhost:4000/posts", { title });
+      await axios.post("http://posts.com/posts/create", { title });
       setTitle("");
     } catch (err) {
       console.error(err);
